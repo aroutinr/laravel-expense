@@ -23,7 +23,11 @@
         "laravel": {
             "providers": [
                 "AroutinR\\Expense\\ExpenseServiceProvider"
-            ]
+            ],
+            "aliases": {
+                "Expense": "AroutinR\\Expense\\Facades\\Expense",
+                "ExpensePayment": "AroutinR\\Expense\\Facades\\ExpensePayment"
+            }
         }
     },
     "require": {

@@ -1,0 +1,39 @@
+<?php
+
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class CreateExpensesTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create(config('expense.table_names.expenses'), function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->morphs('vendor');
+            $table->morphs('expenseable');
+            $table->string('number')->nullable();
+            $table->bigInteger('amount')->default(0);
+            $table->date('date');
+            $table->json('custom_fields')->nullable();
+            $table->char('currency', 3)->default(config('expense.default_currency'));
+            $table->text('note')->nullable();
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists(config('expense.table_names.expenses'));
+    }
+}

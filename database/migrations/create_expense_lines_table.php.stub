@@ -1,0 +1,40 @@
+<?php
+
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class CreateExpenseLinesTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create(config('expense.table_names.expense_lines'), function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('expense_id');
+            $table->string('description')->nullable();
+            $table->decimal('quantity', 12, 2)->default(1);
+            $table->bigInteger('amount')->default(0);
+            $table->timestamps();
+
+            $table->foreign('expense_id')
+                ->references('id')
+                ->on(config('expense.table_names.expenses'))
+                ->onDelete('cascade');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists(config('expense.table_names.expense_lines'));
+    }
+}
