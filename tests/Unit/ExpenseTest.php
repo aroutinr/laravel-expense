@@ -214,8 +214,7 @@ class ExpenseTest extends TestCase
 		$expense = Expense::create($this->vendor, $this->expenseable)
 			->customField('Custom', 'Field');
 
-		$this->assertEquals('Custom', $expense->customFields[0]['name']);
-		$this->assertEquals('Field', $expense->customFields[0]['value']);
+		$this->assertEquals('Field', $expense->customFields['Custom']);
 	}
 
 	/** @test */
@@ -226,11 +225,11 @@ class ExpenseTest extends TestCase
 		$this->expectExceptionMessage('You can add a maximum of 4 custom fields');
 
 		$expense = Expense::create($this->vendor, $this->expenseable)
-			->customField('Custom', 'Field 1')
-			->customField('Custom', 'Field 2')
-			->customField('Custom', 'Field 3')
-			->customField('Custom', 'Field 4')
-			->customField('Custom', 'Field 5');
+			->customField('Custom 1', 'Field 1')
+			->customField('Custom 2', 'Field 2')
+			->customField('Custom 3', 'Field 3')
+			->customField('Custom 4', 'Field 4')
+			->customField('Custom 5', 'Field 5');
 	}
 
 	/** @test */
@@ -241,8 +240,7 @@ class ExpenseTest extends TestCase
 			->customField('Custom', 'Field')
 			->save();
 
-		$this->assertEquals('Custom', $expense->custom_fields[0]['name']);
-		$this->assertEquals('Field', $expense->custom_fields[0]['value']);
+		$this->assertEquals('Field', $expense->custom_fields['Custom']);
 	}
 
     /** @test */

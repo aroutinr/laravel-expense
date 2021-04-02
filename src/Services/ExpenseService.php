@@ -83,16 +83,13 @@ class ExpenseService implements ExpenseServiceInterface
 		return $this;
 	}
 
-	public function customField(string $name, string $value): ExpenseService
+	public function customField(string $key, string $value): ExpenseService
 	{
 		if (count($this->customFields) === config('expense.custom_fields', 4)) {
 			throw new \Exception('You can add a maximum of ' . config('expense.custom_fields', 4) .' custom fields', 1);
 		}
 
-		$this->customFields[] = [
-			'name' => $name,
-			'value' => $value,
-		];
+		$this->customFields[$key] = $value;
 
 		return $this;
 	}

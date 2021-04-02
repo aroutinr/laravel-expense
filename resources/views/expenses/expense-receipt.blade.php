@@ -194,8 +194,8 @@
 			<tfoot>
 				<tr>
 					<th class="text-left">
-						@foreach ($expense->custom_fields as $field)
-							{{ $field['name'] }}: {{ $field['value'] }}
+						@foreach ($expense->custom_fields as $key => $value)
+							{{ $key }}: {{ $value }}
 							<br />
 						@endforeach
 					</th>
