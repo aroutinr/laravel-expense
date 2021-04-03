@@ -2,6 +2,9 @@
 
 All notable changes to `laravel-expense` will be documented in this file.
 
+##  1.0.2 - 2021-04-03
+- Add update() method for update a expense
+
 ##  1.0.1 - 2021-04-02
 - Change custom fields array format 
 
