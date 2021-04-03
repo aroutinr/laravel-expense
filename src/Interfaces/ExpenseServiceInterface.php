@@ -82,6 +82,13 @@ interface ExpenseServiceInterface
     public function save(): Expense;
 
     /**
+     * Update the expense to the database.
+     *
+     * @return Expense
+     */
+    public function update(Expense $expense): Expense;
+
+    /**
      * Save the expense to the database and get the View instance for the expense.
      *
      * @return \Illuminate\View\View
