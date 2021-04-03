@@ -47,6 +47,13 @@ interface ExpenseServiceInterface
     public function date(string $date): ExpenseService;
 
     /**
+     * Set the expense due date
+     *
+     * @return ExpenseService
+     */
+    public function dueDate(string $due_date): ExpenseService;
+
+    /**
      * Add a line type to the expense.
      *
      * @return ExpenseService

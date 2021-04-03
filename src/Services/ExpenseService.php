@@ -16,6 +16,7 @@ class ExpenseService implements ExpenseServiceInterface
 	public $number;
 	public $currency;
 	public $date;
+	public $due_date;
 	public $lines = array();
 	public $customFields = array();
 	public $note;
@@ -55,6 +56,13 @@ class ExpenseService implements ExpenseServiceInterface
 	public function date(string $date): ExpenseService
 	{
 		$this->date = $date;
+
+		return $this;
+	}
+
+	public function dueDate(string $due_date): ExpenseService
+	{
+		$this->due_date = $due_date;
 
 		return $this;
 	}
@@ -119,6 +127,7 @@ class ExpenseService implements ExpenseServiceInterface
 			'number' => $this->number,
 			'currency' => $this->currency,
 			'date' => $this->date,
+			'due_date' => $this->due_date,
 			'amount' => $this->calculateExpenseAmount(),
 			'custom_fields' => $this->customFields,
 			'note' => $this->note,
@@ -145,6 +154,7 @@ class ExpenseService implements ExpenseServiceInterface
 			'number' => $this->number,
 			'currency' => $this->currency,
 			'date' => $this->date,
+			'due_date' => $this->due_date,
 			'amount' => $this->calculateExpenseAmount(),
 			'custom_fields' => $this->customFields,
 			'note' => $this->note,
