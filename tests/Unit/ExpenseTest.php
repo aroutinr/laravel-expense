@@ -206,6 +206,27 @@ class ExpenseTest extends TestCase
 		$this->assertEquals('2021-03-01', $expense->date);
 	}
 
+	/** @test */
+	public function can_add_due_date()
+	{
+		$expense = Expense::create($this->vendor, $this->expenseable)
+			->dueDate('2021-04-15');
+
+		$this->assertEquals('2021-04-15', $expense->due_date);
+	}
+
+	/** @test */
+	public function due_date_is_saved_to_the_database()
+	{
+		$expense = Expense::create($this->vendor, $this->expenseable)
+			->line('Some description', 1, 10000)
+			->dueDate('2021-04-15')
+			->save();
+
+		$this->assertDatabaseCount('expenses', 1);
+		$this->assertEquals('2021-04-15', $expense->due_date);
+	}
+
     /** @test */
     public function can_add_notes_to_expense()
     {
