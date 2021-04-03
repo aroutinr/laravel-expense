@@ -131,6 +131,33 @@ class ExpenseService implements ExpenseServiceInterface
 		return $expense;
 	}
 
+	public function update(Expense $expense): Expense
+	{
+		if (!$this->vendor || !$this->expenseable || !$expense) {
+			throw new \Exception('You must add a Vendor and Expenseable model and the Expense to be Update', 1);
+		}
+
+		$expense->update([
+			'vendor_type' => get_class($this->vendor),
+			'vendor_id' => $this->vendor->id,
+			'expenseable_type' => get_class($this->expenseable),
+			'expenseable_id' => $this->expenseable->id,
+			'number' => $this->number,
+			'currency' => $this->currency,
+			'date' => $this->date,
+			'amount' => $this->calculateExpenseAmount(),
+			'custom_fields' => $this->customFields,
+			'note' => $this->note,
+		]);
+
+		$expense->lines()->delete();
+		$expense->lines()->createMany($this->lines);
+
+		$this->resetExpenseService();
+
+		return $expense;
+	}
+
 	public function saveAndView(array $data = []): \Illuminate\Contracts\View\View
 	{
 		$expense = $this->save();
@@ -145,7 +172,7 @@ class ExpenseService implements ExpenseServiceInterface
 		]));
 	}
 
-	protected function calculateExpenseAmount(): int
+	public function calculateExpenseAmount(): int
 	{
 		$amount = 0;
 

@@ -44,6 +44,35 @@ class ExpenseTest extends TestCase
 	}
 
 	/** @test */
+	public function needs_to_pass_the_expense_to_be_update()
+	{
+		$this->expectException('ArgumentCountError');
+
+		Expense::line('Some description', 1, 10000)
+			->update();
+	}
+
+    /** @test */
+    public function can_create_and_update_a_expense()
+    {
+    	$expense = Expense::create($this->vendor, $this->expenseable)
+			->customField('Origin', 'Houston')
+			->line('Some description', 1, 10000)
+			->line('Another description', 1, 20000)
+			->save();
+
+    	$updatedExpense = Expense::create($this->vendor, $this->expenseable)
+			->customField('Origin', 'Texas')
+			->line('Some description', 2, 10000)
+			->line('Another description', 2, 20000)
+			->update($expense);
+
+		$this->assertDatabaseCount('expense_lines', 2);
+		$this->assertSame('Texas', $updatedExpense->custom_fields['Origin']);
+		$this->assertSame(60000, $updatedExpense->balance);
+	}
+
+	/** @test */
 	public function can_add_expense_line_to_the_expense()
 	{
 		$expense = Expense::create($this->vendor, $this->expenseable)
